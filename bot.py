@@ -15,7 +15,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import asyncio
 
-TOKEN = "8719992437:AAEcApSXMMcXgCXY-E21IE4GaipKq3hG7L0"
+TOKEN = "8719992437:AAEsq8TNcR0tkO_i0Rjhij2g6tVoeYxTwdc"
 
 VIDEOS = []
 
