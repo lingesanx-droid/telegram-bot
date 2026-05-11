@@ -24,7 +24,7 @@ Thread(target=run).start()
 
 # ================= BOT TOKEN =================
 
-TOKEN = "8719992437:AAF-Yz2YT2gpRhS7oN2CgO8i2ieVb2_Om9Y"
+TOKEN = "8719992437:AAES9nDlw8h2q9or5lDnAFGuyOowwOF6xII"
 
 # ================= VIDEOS =================
 
