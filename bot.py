@@ -52,12 +52,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sent_messages = []
 
     for video in VIDEOS:
-        msg = await context.bot.send_document(
-    chat_id=update.effective_chat.id,
-    document=video
-)
-        )
-        sent_messages.append(msg.message_id)
+    msg = await context.bot.send_document(
+        chat_id=update.effective_chat.id,
+        document=video
+    )
+    sent_messages.append(msg.message_id)
 
     await asyncio.sleep(120)
 
