@@ -29,11 +29,11 @@ TOKEN = "8719992437:AAF-Yz2YT2gpRhS7oN2CgO8i2ieVb2_Om9Y"
 # ================= VIDEOS =================
 
 VIDEOS = [
-    "BAACAgUAAxkBAAFJVg1qAbv66nQ7N9ZuVrp5I7AC1IrT-QAC5B4AAvcuCVRu2LAGvDq2yTsE",
-    "BAACAgUAAxkBAAFJVgxqAbv6vKrNs-YeC9i8omsWn8qFwgAC4x4AAvcuCVSrpuF_8WTpKjsE",
-    "BAACAgUAAxkBAAFJVgtqAbv6PJp17U8ZmPtAjw9UBlxBKAAC4h4AAvcuCVQfgTGrVUhbNDsE",
-    "BAACAgUAAxkBAAFJVgpqAbv6gA8WZmECWbeecEqcUxub2gAC4R4AAvcuCVReMdWdu4OrezsE",
-    "BAACAgUAAxkBAAFJVglqAbv6GE6TgqlZF8B7XqSzAAGL9XAAAuAeAAL3LglUZ0eCl43OUeE7BA"
+    "videos_1.mp4",
+    "videos_2.mp4",
+    "videos_3.mp4",
+    "videos_4.mp4",
+    "videos_5.mp4"
 ]
 
 # ================= BUTTON LINKS =================
@@ -73,7 +73,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         msg = await context.bot.send_video(
             chat_id=update.effective_chat.id,
-            video=video
+            video=open(video, "rb")
         )
 
         sent_messages.append(msg.message_id)
