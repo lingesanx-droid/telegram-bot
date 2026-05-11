@@ -62,7 +62,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 """
 
     await update.message.reply_text(
-        text,
+        text=text,
         reply_markup=reply_markup
     )
 
@@ -71,12 +71,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # SEND VIDEOS
     for video in VIDEOS:
 
-        msg = await context.bot.send_video(
-            chat_id=update.effective_chat.id,
-            video=open(video, "rb")
-        )
+        video_path = os.path.join(os.getcwd(), video)
 
-        sent_messages.append(msg.message_id)
+        if os.path.exists(video_path):
+
+            with open(video_path, "rb") as vid:
+
+                msg = await context.bot.send_video(
+                    chat_id=update.effective_chat.id,
+                    video=vid
+                )
+
+                sent_messages.append(msg.message_id)
 
     # WAIT 2 MINUTES
     await asyncio.sleep(120)
