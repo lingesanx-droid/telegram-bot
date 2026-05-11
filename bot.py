@@ -1,3 +1,16 @@
+from flask import Flask
+from threading import Thread
+
+app_web = Flask('')
+
+@app_web.route('/')
+def home():
+    return "Bot is running!"
+
+def run():
+    app_web.run(host='0.0.0.0', port=10000)
+
+Thread(target=run).start()
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import asyncio
@@ -7,7 +20,7 @@ TOKEN = "8719992437:AAEcApSXMMcXgCXY-E21IE4GaipKq3hG7L0"
 VIDEOS = []
 
 BUY_LINK = "https://t.me/unseenclipsbot"
-PROOF_LINK = "https://t.me/unseenxproof"
+PROOF_LINK = "https://t.me/unseenxproofs"
 ADMIN_LINK = "https://t.me/igmikasa"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
