@@ -1,27 +1,34 @@
 from flask import Flask
 from threading import Thread
+import os
+import asyncio
 
-app_web = Flask('')
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+app_web = Flask(__name__)
 
 @app_web.route('/')
 def home():
     return "Bot is running!"
 
 def run():
-    app_web.run(host='0.0.0.0', port=10000)
+    app_web.run(
+        host='0.0.0.0',
+        port=int(os.environ.get("PORT", 10000))
+    )
 
 Thread(target=run).start()
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-import asyncio
 
-TOKEN = "8719992437:AAEsq8TNcR0tkO_i0Rjhij2g6tVoeYxTwdc"
+TOKEN = "8719992437:AAF-Yz2YT2gpRhS7oN2CgO8i2ieVb2_Om9Y"
 
-VIDEOS = ["AAMCBQADGQEAAUlWCWoBu_oYTpOCqVkXwHtepLMAAYv1cAAC4B4AAvcuCVRnR4KXjc5R4QEAB20AAzsE", 
-          "AAMCBQADGQEAAUlWCmoBu_qADxZmYQJZt55wSpxTG5vaAALhHgAC9y4JVF4x1Z27g6t7AQAHbQADOwQ", 
-          "AAMCBQADGQEAAUlWC2oBu_o8mnXtTxmY-0CPD1QGXEEoAALiHgAC9y4JVB-BMatVSFs0AQAHbQADOwQ", 
-          "AAMCBQADGQEAAUlWDGoBu_q8qs2z5h4L2LyiaxafyoXCAALjHgAC9y4JVKum4X_xZOkqAQAHbQADOwQ", 
-          "AAMCBQADGQEAAUlWDWoBu_rqdDs31m5WunkjsALUitP5AALkHgAC9y4JVG7YsAa8OrbJAQAHbQADOwQ"]
+VIDEOS = [
+    "BAACAgUAAxkBAAFJVglqAbv6GE6TgqlZF8B7XqSzAAGL9XAAAuAeAAL3LglUZ0eCl43OUeE7BA",
+    "BAACAgUAAxkBAAFJVgpqAbv6gA8WZmECWbeecEqcUxub2gAC4R4AAvcuCVReMdWdu4OrezsE",
+    "BAACAgUAAxkBAAFJVgtqAbv6PJp17U8ZmPtAjw9UBlxBKAAC4h4AAvcuCVQfgTGrVUhbNDsE",
+    "BAACAgUAAxkBAAFJVgxqAbv6vKrNs-YeC9i8omsWn8qFwgAC4x4AAvcuCVSrpuF_8WTpKjsE",
+    "BAACAgUAAxkBAAFJVg1qAbv66nQ7N9ZuVrp5I7AC1IrT-QAC5B4AAvcuCVRu2LAGvDq2yTsE"
+]
 
 BUY_LINK = "https://t.me/unseenclipsbot"
 PROOF_LINK = "https://t.me/unseenxproofs"
@@ -52,11 +59,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sent_messages = []
 
     for video in VIDEOS:
-    msg = await context.bot.send_document(
-        chat_id=update.effective_chat.id,
-        document=video
-    )
-    sent_messages.append(msg.message_id)
+        msg = await context.bot.send_video(
+            chat_id=update.effective_chat.id,
+            video=video
+        )
+
+        sent_messages.append(msg.message_id)
 
     await asyncio.sleep(120)
 
