@@ -42,33 +42,37 @@ BUY_LINK = "https://t.me/unseenclipsbot"
 PROOF_LINK = "https://t.me/unseenxproofs"
 ADMIN_LINK = "https://t.me/igmikasa"
 
+# ================= BUTTONS =================
+
+keyboard = [
+    [InlineKeyboardButton("💸 Buy Access", url=BUY_LINK)],
+    [InlineKeyboardButton("📸 Payment Proofs", url=PROOF_LINK)],
+    [InlineKeyboardButton("👑 Admin Contact", url=ADMIN_LINK)]
+]
+
+reply_markup = InlineKeyboardMarkup(keyboard)
+
 # ================= START COMMAND =================
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    keyboard = [
-        [InlineKeyboardButton("💸 Buy Access", url=BUY_LINK)],
-        [InlineKeyboardButton("📸 Payment Proofs", url=PROOF_LINK)],
-        [InlineKeyboardButton("👑 Admin Contact", url=ADMIN_LINK)]
-    ]
-
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
     text = """
 🔥 FREE DEMO PREVIEW 🔥
 
-⏰ Demo auto delete in 2 minutes
+⏰ Demo auto delete in 1 minute
 💎 Buy premium access below
 """
 
-    await update.message.reply_text(
+    # SEND MAIN TEXT
+    main_msg = await update.message.reply_text(
         text=text,
         reply_markup=reply_markup
     )
 
     sent_messages = []
 
-    # SEND VIDEOS
+    # ================= SEND VIDEOS =================
+
     for video in VIDEOS:
 
         video_path = os.path.join(os.getcwd(), video)
@@ -84,10 +88,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
                 sent_messages.append(msg.message_id)
 
-    # WAIT 2 MINUTES
-    await asyncio.sleep(120)
+    # ================= WAIT 1 MINUTE =================
 
-    # DELETE VIDEOS
+    await asyncio.sleep(60)
+
+    # ================= DELETE VIDEOS =================
+
     for msg_id in sent_messages:
         try:
             await context.bot.delete_message(
@@ -97,10 +103,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except:
             pass
 
-    # EXPIRED MESSAGE
+    # ================= DELETE MAIN TEXT =================
+
+    try:
+        await context.bot.delete_message(
+            chat_id=update.effective_chat.id,
+            message_id=main_msg.message_id
+        )
+    except:
+        pass
+
+    # ================= FINAL BUTTONS ONLY =================
+
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="❌ Demo Expired\n\n💸 Buy Full Access Below",
+        text="💸 Purchase Premium Access Below",
         reply_markup=reply_markup
     )
 
