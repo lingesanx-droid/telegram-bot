@@ -100,18 +100,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 chat_id=update.effective_chat.id,
                 message_id=msg_id
             )
-        except:
-            pass
+        except Exception as e:
+            print(e)
 
     # ================= DELETE MAIN TEXT =================
 
     try:
-        await context.bot.delete_message(
-            chat_id=update.effective_chat.id,
-            message_id=main_msg.message_id
-        )
-    except:
-        pass
+        await main_msg.delete()
+    except Exception as e:
+        print(e)
 
     # ================= FINAL BUTTONS ONLY =================
 
